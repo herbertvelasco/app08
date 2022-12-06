@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "690432543685",
+    "project_id": "tasks-a0bd8",
+    "storage_bucket": "tasks-a0bd8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690432543685:android:08248848bb4744f2bf99ac",
+        "android_client_info": {
+          "package_name": "com.livcode.tasks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "690432543685-updjo20qjaj2ttqrrr70kg37j9lf15qk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7sGCaDM__FnJyk846OfCvOksexbjrs5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "690432543685-updjo20qjaj2ttqrrr70kg37j9lf15qk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
