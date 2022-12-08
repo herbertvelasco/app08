@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                 tasksReference.doc("").update(
                   {
                     "title": "Ir de paseo",
-                    "description": "tenemos que salir muy temprao",
+                    "description": "tenemos que salir muy temprano",
                   },
                 ).catchError(
                   (error) {
@@ -71,6 +71,39 @@ class HomePage extends StatelessWidget {
               },
               child: Text(
                 "Actualizar documento",
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                tasksReference.doc("").delete().catchError(
+                  (error) {
+                    print(error);
+                  },
+                ).whenComplete(
+                  () {
+                    print("Eliminacion completada");
+                  },
+                );
+              },
+              child: Text(
+                "Eliminar",
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                tasksReference.doc("").set(
+                  {
+                    "title": "Ir al concierto",
+                    "description": "este fin de semana",
+                  },
+                ).catchError((error) {
+                  print(error);
+                }).whenComplete(() {
+                  print("Creacion completada");
+                });
+              },
+              child: Text(
+                "Agregar doc peronalizado",
               ),
             ),
           ],
