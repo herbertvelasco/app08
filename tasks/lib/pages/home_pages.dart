@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tasks/ui/general/colors.dart';
 import 'package:tasks/ui/widgets/general_witget.dart';
+import 'package:tasks/ui/widgets/item_task_widget.dart';
 import 'package:tasks/ui/widgets/textfield_search_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -97,73 +98,20 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-           Padding(padding: EdgeInsets.all(14),
-           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-               Text(
-              " Toda mi tarea",
-              style: TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w600,
-                color: kBrandPrymaryColor.withOpacity(0.85),
-              ),
-            ),
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 14.0, vertical: 16.0),
-                  //margin: const ,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(14.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    offset: const Offset(4, 4),
-                    blurRadius: 12.0,
-                  ),
-                ],
-              ),
+            Padding(
+              padding: EdgeInsets.all(14),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0,),
-                    decoration: BoxDecoration(color: Color(0xff3E80FF), 
-                    borderRadius: BorderRadius.circular (6.0),),
-                    child: Text("Personal",
-                    style: TextStyle(color: Colors.white, fontSize: 13.0,),
-                    ),
-                  ),
-            ],
-           ),
-           ),
-                  divider3(),
                   Text(
-                    "lorem Lorem Ipsum es simplemente el texto de relleno ",
+                    " Toda mi tarea",
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w600,
                       color: kBrandPrymaryColor.withOpacity(0.85),
                     ),
                   ),
-                  Text(
-                    "lorem Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum relleno estándar de las industrias",
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w400,
-                      color: kBrandPrymaryColor.withOpacity(0.75),
-                    ),
-                  ),
-                  divider6(),
-                  Text(
-                    "11/11/1034",
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w500,
-                      color: kBrandPrymaryColor.withOpacity(0.75),
-                    ),
-                  ),
+                  ItemTaskWidget(),
                 ],
               ),
             ),
