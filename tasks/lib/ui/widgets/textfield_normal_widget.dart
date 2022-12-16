@@ -5,22 +5,25 @@ class TextFieldNormalWidget extends StatelessWidget {
   String hintText;
   IconData icon;
   Function? onTap;
+  TextEditingController controller;
 
   TextFieldNormalWidget({
     required this.hintText,
     required this.icon,
     this.onTap,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      controller: controller,
       onTap: onTap != null
           ? () {
               onTap!();
             }
           : null,
-      readOnly: onTap != null ? true:false,
+      readOnly: onTap != null ? true : false,
       decoration: InputDecoration(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
@@ -44,7 +47,21 @@ class TextFieldNormalWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(14.0),
           borderSide: BorderSide.none,
         ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14.0),
+          borderSide: BorderSide.none,
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14.0),
+          borderSide: BorderSide.none,
+        ),
       ),
+      validator: (String? value) {
+        if (value != null && value.isEmpty) {
+          return "Campo Obligatorio";
+        }
+        return null;
+      },
     );
   }
 }

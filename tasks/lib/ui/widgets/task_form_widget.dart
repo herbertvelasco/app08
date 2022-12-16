@@ -12,6 +12,15 @@ class TaskFormWidget extends StatefulWidget {
 }
 
 class _TaskFormWidgetState extends State<TaskFormWidget> {
+
+final formKey = GlobalKey<FormState>();
+
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+
+  String categorySelected = "Personal";
+
   showSelectDate() async {
     DateTime? dateTime = await showDatePicker(
         context: context,
@@ -38,6 +47,10 @@ class _TaskFormWidgetState extends State<TaskFormWidget> {
             child: widget!,
           );
         });
+    if (dateTime != null) {
+      _dateController.text = dateTime.toString().substring(0, 10);
+      setState(() {});
+    }
   }
 
   @override
@@ -51,85 +64,111 @@ class _TaskFormWidgetState extends State<TaskFormWidget> {
           topRight: Radius.circular(20.0),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            "Agregar tarea",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 14.0,
+      child: Form(
+        key: formKey,
+
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "Agregar tarea",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 14.0,
+              ),
             ),
-          ),
-          divider6(),
-          TextFieldNormalWidget(
-            hintText: "Titulo",
-            icon: Icons.text_fields,
-          ),
-          divider10(),
-          TextFieldNormalWidget(
-            hintText: "Description",
-            icon: Icons.description,
-          ),
-          divider10(),
-          Text("Categorias: "),
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.start,
-            runAlignment: WrapAlignment.start,
-            spacing: 10.0,
-            children: [
-              FilterChip(
-                selected: true,
-                backgroundColor: kBrandSecondaryColor,
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                selectedColor: categoryColor["Personal"],
-                checkmarkColor: Colors.white,
-                labelStyle: TextStyle(
-                  color: Colors.white,
+            divider6(),
+            TextFieldNormalWidget(
+              hintText: "Titulo",
+              icon: Icons.text_fields,
+              controller: _titleController,
+            ),
+            divider10(),
+            TextFieldNormalWidget(
+              hintText: "Description",
+              icon: Icons.description,
+              controller: _descriptionController,
+            ),
+            divider10(),
+            Text("Categorias: "),
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.start,
+              runAlignment: WrapAlignment.start,
+              spacing: 10.0,
+              children: [
+                FilterChip(
+                  selected: categorySelected == "Personal",
+                  backgroundColor: kBrandSecondaryColor,
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  selectedColor: categoryColor[categorySelected],
+                  checkmarkColor: Colors.white,
+                  labelStyle: TextStyle(
+                    color: categorySelected == "Personal" ? Colors.white : kBrandPrymaryColor,
+                  ),
+                  label: Text("Personal"),
+                  onSelected: (bool value) {
+                    categorySelected = "Personal",
+                    setState(() {
+                      
+                    });
+                  },
                 ),
-                label: Text("Personal"),
-                onSelected: (bool value) {},
-              ),
-              FilterChip(
-                selected: true,
-                backgroundColor: kBrandSecondaryColor,
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                selectedColor: categoryColor["Trabajo"],
-                checkmarkColor: Colors.white,
-                labelStyle: TextStyle(
-                  color: Colors.white,
+                FilterChip(
+                  selected: categorySelected == "Trabajo",
+                  backgroundColor: kBrandSecondaryColor,
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  selectedColor: categoryColor["Trabajo"],
+                  checkmarkColor: Colors.white,
+                  labelStyle: TextStyle(
+                    color: categorySelected == "Trabajo" ? Colors.white : kBrandPrymaryColor,
+                  ),
+                  label: Text("Trabajo"),
+                  onSelected: (bool value) {
+                     categorySelected = "trabajo",
+                    setState(() {
+                      
+                    });
+                  },
                 ),
-                label: Text("Trabajo"),
-                onSelected: (bool value) {},
-              ),
-              FilterChip(
-                selected: true,
-                backgroundColor: kBrandSecondaryColor,
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                selectedColor: categoryColor["Otro"],
-                checkmarkColor: Colors.white,
-                labelStyle: TextStyle(
-                  color: Colors.white,
+                FilterChip(
+                  selected: categorySelected == "Otro",
+                  backgroundColor: kBrandSecondaryColor,
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  selectedColor: categoryColor["Otro"],
+                  checkmarkColor: Colors.white,
+                  labelStyle: TextStyle(
+                    color: categorySelected == "Otro" ? Colors.white : kBrandPrymaryColor,
+                  ),
+                  label: Text("Otro"),
+                  onSelected: (bool value) {
+                    categorySelected = "Otro",
+                    setState(() {
+                      
+                    });
+                  },
                 ),
-                label: Text("Otro"),
-                onSelected: (bool value) {},
-              ),
-            ],
-          ),
-          divider10(),
-          TextFieldNormalWidget(
-            hintText: "Fecha",
-            icon: Icons.date_range,
-            onTap: () {
-              print(
-                showSelectDate(),
-              );
-            },
-          ),
-          divider20(),
-          ButtonNormalWidget(),
-        ],
+              ],
+            ),
+            divider10(),
+            TextFieldNormalWidget(
+              hintText: "Fecha",
+              icon: Icons.date_range,
+              onTap: () {
+                showSelectDate();
+              },
+              controller: _dateController,
+            ),
+            divider20(),
+            ButtonNormalWidget(
+              onPressed: (){
+                if(formKey.currentState!.validate()){
+                  
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
