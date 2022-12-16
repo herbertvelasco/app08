@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasks/models/task_model.dart';
 import 'package:tasks/ui/widgets/item_category_widget.dart';
-//import 'package:firetask/ui/Widgets/general_widgets.dart';
+
 import '../general/colors.dart';
 import 'general_witget.dart';
 

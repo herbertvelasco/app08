@@ -2,33 +2,78 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tasks/models/task_model.dart';
 import 'package:tasks/ui/general/colors.dart';
+import 'package:tasks/ui/widgets/button_normal_widget.dart';
 import 'package:tasks/ui/widgets/general_witget.dart';
 import 'package:tasks/ui/widgets/item_task_widget.dart';
-import 'package:tasks/ui/widgets/textfield_search_widget.dart';
+import 'package:tasks/ui/widgets/textfield_normal_widget.dart';
 
 class HomePage extends StatelessWidget {
   CollectionReference tasksReference =
       FirebaseFirestore.instance.collection('tasks');
-  Stream<int> counter() async* {
-    for (int i = 0; i < 10; i++) {
-      await Future.delayed(Duration(seconds: 2));
-      yield i;
-    }
+
+  showTaskForm(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            padding: const EdgeInsets.all(14.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Agregar tarea",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.0,
+                  ),
+                ),
+                divider6(),
+                TextFieldNormalWidget(
+                  hintText: "Titulo",
+                  icon: Icons.text_fields,
+                ),
+                divider6(),
+                TextFieldNormalWidget(
+                  hintText: "Description",
+                  icon: Icons.description,
+                ),
+                divider10(),
+                ButtonNormalWidget(),
+              ],
+            ),
+          );
+        });
   }
 
-  Future<int> getNumber() async {
-    return 1000;
-  }
+  // Stream<int> counter() async* {
+  //   for (int i = 0; i < 10; i++) {
+  //     await Future.delayed(Duration(seconds: 2));
+  //     yield i;
+  //   }
+  // }
+
+  // Future<int> getNumber() async {
+  //   return 1000;
+  // }
 
   @override
   Widget build(BuildContext context) {
-    counter().listen((event) {
-      print(event);
-    });
+    // counter().listen((event) {
+    //   print(event);
+    // });
     return Scaffold(
       backgroundColor: kBrandSecondaryColor,
       floatingActionButton: InkWell(
-        onTap: () {},
+        onTap: () {
+          showTaskForm(context);
+        },
         borderRadius: BorderRadius.circular(14.0),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8.0),
@@ -94,7 +139,10 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     divider10(),
-                    TextFieldSearchWidget(),
+                    TextFieldNormalWidget(
+                      hintText: "Buscar tarea...",
+                      icon: Icons.search,
+                    ),
                   ],
                 ),
               ),
