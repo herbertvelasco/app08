@@ -1,6 +1,21 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:tasks/models/task_model.dart';
+import 'package:tasks/ui/widgets/item_task_widget.dart';
 
 class TaskSearchDelegate extends SearchDelegate {
+  List<TaskModel> tasks;
+  TaskSearchDelegate({required this.tasks});
+
+  @override
+  // TODO: implement searchFieldLabel
+  String? get searchFieldLabel => "Buscar tarea...";
+  @override
+  // TODO: implement searchFieldStyle
+  TextStyle? get searchFieldStyle => TextStyle(
+        fontSize: 15.0,
+      );
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -29,17 +44,39 @@ class TaskSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text(
-      "Result",
-      style: TextStyle(color: Colors.red),
+    List<TaskModel> results = tasks
+        .where((element) =>
+            element.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    return Padding(
+      padding: const EdgeInsets.all(14.0),
+      child: ListView.builder(
+        itemCount: results.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ItemTaskWidget(
+            taskModel: results[index],
+          );
+        },
+      ),
     );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Text(
-      "Sugges",
-      style: TextStyle(color: Colors.red),
+    List<TaskModel> results = tasks
+        .where((element) =>
+            element.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    return Padding(
+      padding: const EdgeInsets.all(14.0),
+      child: ListView.builder(
+        itemCount: results.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ItemTaskWidget(
+            taskModel: results[index],
+          );
+        },
+      ),
     );
   }
 }
