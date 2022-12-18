@@ -7,6 +7,7 @@ import 'package:tasks/ui/widgets/general_witget.dart';
 import 'package:tasks/ui/widgets/item_task_widget.dart';
 import 'package:tasks/ui/widgets/task_form_widget.dart';
 import 'package:tasks/ui/widgets/textfield_normal_widget.dart';
+import 'package:tasks/utils/task_search_delegate.dart';
 
 class HomePage extends StatelessWidget {
   final TextEditingController _searchController = TextEditingController();
@@ -118,6 +119,9 @@ class HomePage extends StatelessWidget {
                       hintText: "Buscar tarea...",
                       icon: Icons.search,
                       controller: _searchController,
+                      onTap: () async{
+                       await showSearch(context: context, delegate: TaskSearchDelegate());
+                      },
                     ),
                   ],
                 ),
@@ -148,10 +152,20 @@ class HomePage extends StatelessWidget {
                         //       element.data() as Map<String, dynamic>;
                         //   tasks.add(TaskModel.fromJson(myMap));
                         // });
-                        tasks = collection.docs
-                            .map((e) => TaskModel.fromJson(
-                                e.data() as Map<String, dynamic>))
-                            .toList();
+                        // tasks = collection.docs
+                        //     .map(
+                        //       (e) => TaskModel.fromJson(
+                        //           e.data() as Map<String, dynamic>),
+                        //     )
+                        //     .toList();
+
+                        tasks = collection.docs.map((e) {
+                          TaskModel task = TaskModel.fromJson(
+                              e.data() as Map<String, dynamic>);
+                          task.id = e.id;
+                          return task;
+                        }).toList();
+
                         return ListView.builder(
                           itemCount: tasks.length,
                           shrinkWrap: true,
