@@ -17,7 +17,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Tasks firebase",
       debugShowCheckedModeBanner: false,
-      theme: GoogleFonts.poppinsTextTheme(),
+      theme: ThemeData(
+        textTheme: GoogleFonts.poppinsTextTheme(),
+      ),
       home: HomePage(),
     );
   }
