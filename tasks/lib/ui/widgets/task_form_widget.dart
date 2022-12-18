@@ -13,9 +13,8 @@ class TaskFormWidget extends StatefulWidget {
 }
 
 class _TaskFormWidgetState extends State<TaskFormWidget> {
-
-final formKey = GlobalKey<FormState>();
-MyServiceFirestore taskService = MyServiceFirestore(collection: "tasks");
+  final formKey = GlobalKey<FormState>();
+  MyServiceFirestore taskService = MyServiceFirestore(collection: "tasks");
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -54,12 +53,11 @@ MyServiceFirestore taskService = MyServiceFirestore(collection: "tasks");
     }
   }
 
-registerTask(){
-   if(formKey.currentState!.validate()){
-                  taskService.addTask();
-                }
-}
-
+  registerTask() {
+    if (formKey.currentState!.validate()) {
+      taskService.addTask();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +72,6 @@ registerTask(){
       ),
       child: Form(
         key: formKey,
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -112,14 +109,14 @@ registerTask(){
                   selectedColor: categoryColor[categorySelected],
                   checkmarkColor: Colors.white,
                   labelStyle: TextStyle(
-                    color: categorySelected == "Personal" ? Colors.white : kBrandPrymaryColor,
+                    color: categorySelected == "Personal"
+                        ? Colors.white
+                        : kBrandPrymaryColor,
                   ),
                   label: Text("Personal"),
                   onSelected: (bool value) {
-                    categorySelected = "Personal",
-                    setState(() {
-                      
-                    });
+                    categorySelected = "Personal";
+                    setState(() {});
                   },
                 ),
                 FilterChip(
@@ -129,14 +126,14 @@ registerTask(){
                   selectedColor: categoryColor["Trabajo"],
                   checkmarkColor: Colors.white,
                   labelStyle: TextStyle(
-                    color: categorySelected == "Trabajo" ? Colors.white : kBrandPrymaryColor,
+                    color: categorySelected == "Trabajo"
+                        ? Colors.white
+                        : kBrandPrymaryColor,
                   ),
                   label: Text("Trabajo"),
                   onSelected: (bool value) {
-                     categorySelected = "trabajo",
-                    setState(() {
-                      
-                    });
+                    categorySelected = "trabajo";
+                    setState(() {});
                   },
                 ),
                 FilterChip(
@@ -146,14 +143,14 @@ registerTask(){
                   selectedColor: categoryColor["Otro"],
                   checkmarkColor: Colors.white,
                   labelStyle: TextStyle(
-                    color: categorySelected == "Otro" ? Colors.white : kBrandPrymaryColor,
+                    color: categorySelected == "Otro"
+                        ? Colors.white
+                        : kBrandPrymaryColor,
                   ),
                   label: Text("Otro"),
                   onSelected: (bool value) {
-                    categorySelected = "Otro",
-                    setState(() {
-                      
-                    });
+                    categorySelected = "Otro";
+                    setState(() {});
                   },
                 ),
               ],
@@ -169,8 +166,8 @@ registerTask(){
             ),
             divider20(),
             ButtonNormalWidget(
-              onPressed: (){
-               registerTask();
+              onPressed: () {
+                registerTask();
               },
             ),
           ],
