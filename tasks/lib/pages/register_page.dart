@@ -15,15 +15,28 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
+final keyForm = GlobalKey<FormState>();
 final TextEditingController _emailController =TextEditingController();
 final TextEditingController _passwordController =TextEditingController();
 final TextEditingController _fullnameController =TextEditingController();
 
 _registerUser()async{
-  UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-    email: email, 
-    password: password,);
+
+ try {
+    if (keyForm.currentState!.validate()) {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    email: _emailController.text, 
+    password: _passwordController.text,
+    );
+    }
+ } on FirebaseAuthException catch (e) {
+  if (error.code == "weak-password") {
+    showSnackBarError(context, "La contrasenia es muy debil");
+  }else if(error.code == "email-already-in-use"){
+    showSnackBarError(context, "el correo ya existe");
+  }
+   
+ }
 }
 
   @override
@@ -33,52 +46,55 @@ _registerUser()async{
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              divider20()
-              SvgPicture.asset(
-                'assets/images/register.svg',
-                height: 180.0,
-              ),
-              divider10(),
-              Text(
-                "registrate",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w600,
-                  color: kBrandPrymaryColor,
+          child: Form(
+            key: keyForm,
+            child: Column(
+              children: [
+                divider20()
+                SvgPicture.asset(
+                  'assets/images/register.svg',
+                  height: 180.0,
                 ),
-              ),
-              divider20()
-              TextFieldNormalWidget(
-                hintText: "Nombre completo",
-                icon: Icons.email,
-                controller: _fullnameController,
-              ),
-              divider10(),
-              divider6(),
-              TextFieldNormalWidget(
-                hintText: "Correo electronico",
-                icon: Icons.email,
-                controller: _emailController,
-              ),
-              divider10(),
-              divider6(),
-              TextFieldPasswordWidget(
-                controller: _passwordController,
-              ),
-              divider20(),
-              
-              divider10(),
-              ButtonCustomWidget(
-                text: "Registrate",
-                icon: "check",
-                color: kBrandPrymaryColor,
-                onPressed: (){
-                  _registerUser();
-                },
-              ),
-            ],
+                divider10(),
+                Text(
+                  "registrate",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                    color: kBrandPrymaryColor,
+                  ),
+                ),
+                divider20()
+                TextFieldNormalWidget(
+                  hintText: "Nombre completo",
+                  icon: Icons.email,
+                  controller: _fullnameController,
+                ),
+                divider10(),
+                divider6(),
+                TextFieldNormalWidget(
+                  hintText: "Correo electronico",
+                  icon: Icons.email,
+                  controller: _emailController,
+                ),
+                divider10(),
+                divider6(),
+                TextFieldPasswordWidget(
+                  controller: _passwordController,
+                ),
+                divider20(),
+                
+                divider10(),
+                ButtonCustomWidget(
+                  text: "Registrate",
+                  icon: "check",
+                  color: kBrandPrymaryColor,
+                  onPressed: (){
+                    _registerUser();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
