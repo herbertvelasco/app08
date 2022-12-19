@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tasks/models/user_model.dart';
+import 'package:tasks/pages/home_pages.dart';
+import 'package:tasks/services/my_service_firestore.dart';
 import 'package:tasks/ui/general/colors.dart';
 import 'package:tasks/ui/widgets/button_custom_widget.dart';
 import 'package:tasks/ui/widgets/general_witget.dart';
@@ -20,6 +23,8 @@ final TextEditingController _emailController =TextEditingController();
 final TextEditingController _passwordController =TextEditingController();
 final TextEditingController _fullnameController =TextEditingController();
 
+MyServiceFirestore userService =MyServiceFirestore(collection: "users");
+
 _registerUser()async{
 
  try {
@@ -28,6 +33,19 @@ _registerUser()async{
     email: _emailController.text, 
     password: _passwordController.text,
     );
+
+    if (userCredential.user != null) {
+      UserModel userModel = UserModel(
+        fullname: _fullnameController.text, 
+        email: _emailController.text, 
+        
+        );
+      userService.addUser(userModel).then((value) {
+        if (value.isNotEmpty) {
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage()), (route) => false);
+        }
+      });
+    }
     }
  } on FirebaseAuthException catch (e) {
   if (error.code == "weak-password") {

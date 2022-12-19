@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tasks/models/task_model.dart';
+import 'package:tasks/models/user_model.dart';
 
 class MyServiceFirestore {
   String collection;
@@ -15,10 +16,16 @@ class MyServiceFirestore {
   }
 
   Future<void> finishedTask(String taskId) async {
-    await _CollectionReference.doc(taskId).update(
+    await _collectionReference.doc(taskId).update(
       {
         "status": false,
       },
     );
+  }
+
+  Future<String> addUser(UserModel userModel) async {
+    DocumentReference documentReference =
+        await _collectionReference.add(userModel.toJson());
+    return documentReference.id;
   }
 }
