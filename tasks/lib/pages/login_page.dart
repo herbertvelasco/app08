@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tasks/pages/register_page.dart';
 import 'package:tasks/ui/general/colors.dart';
 import 'package:tasks/ui/widgets/button_custom_widget.dart';
 import 'package:tasks/ui/widgets/button_normal_widget.dart';
@@ -23,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               SvgPicture.asset(
@@ -51,16 +52,17 @@ class _LoginPageState extends State<LoginPage> {
                 controller: _passwordController,
               ),
               divider20(),
-              TextFieldNormalWidget(
-                hintText: "Correo electronico",
-                icon: Icons.email,
-                controller: _emailController,
-              ),
+              // TextFieldNormalWidget(
+              //   hintText: "Correo electronico",
+              //   icon: Icons.email,
+              //   controller: _emailController,
+              // ),
               divider10(),
               ButtonCustomWidget(
                 text: "Iniciar Sesion",
                 icon: "check",
                 color: kBrandPrymaryColor,
+                onPressed: (){},
               ),
               divider20(),
               Text(
@@ -71,12 +73,38 @@ class _LoginPageState extends State<LoginPage> {
                 text: "Google",
                 icon: "google",
                 color: Color(0xfff84b2a),
+                onPressed: (){},
               ),
               divider20(),
               ButtonCustomWidget(
                 text: "Facebook",
                 icon: "facebook",
                 color: Color(0xff5070CC0),
+                onPressed: (){},
+              ),
+              divider10(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Aun no te registras?",
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage()));
+                    },
+                    child: Text(
+                      "Registrate aqui",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: kBrandPrymaryColor,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
